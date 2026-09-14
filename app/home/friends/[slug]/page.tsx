@@ -1,17 +1,15 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import dummyData from "../../dummy.json";
 import BackButton from "@/components/backbutton";
+import { useParams } from "next/navigation";
 
-export default function FriendPage({
-    params,
-}: {
-    params: Promise<{ slug: string }>;
-}) {
-    const [slug, setSlug] = useState<string | null>(null);
+export default function FriendPage() {
+    const params = useParams<{ slug: string }>();
+    const slug = params.slug as string;
     const [input, setInput] = useState("");
-
+    const messagesContainerRef = useRef<HTMLDivElement>(null);
     const [messages, setMessages] = useState([
         {
             id: 1,
@@ -40,7 +38,9 @@ export default function FriendPage({
         },
     ]);
 
-    const friend = dummyData.find((item) => item.id === "67a1f001");
+
+
+    const friend = dummyData.find((item) => item.id === slug);
 
     if (!friend) {
         return (
@@ -70,6 +70,14 @@ export default function FriendPage({
 
         setInput("");
     }
+
+    useEffect(() => {
+        const container = messagesContainerRef.current;
+
+        if (!container) return;
+
+        container.scrollTop = container.scrollHeight;
+    }, [messages]);
 
     return (
         <div className="h-full w-full flex flex-col">
@@ -128,7 +136,7 @@ export default function FriendPage({
 
             <div className="flex-1 min-h-0 flex flex-col chat-section">
 
-                <div className="flex-1 min-h-0 overflow-y-auto px-3 py-5">
+                <div className="flex-1 min-h-0 overflow-y-auto px-3 py-5" ref={messagesContainerRef}>
 
                     <div className="min-h-full flex flex-col justify-end gap-3">
 
@@ -139,14 +147,14 @@ export default function FriendPage({
                                 <div
                                     key={message.id}
                                     className={`flex ${isMine
-                                            ? "justify-end"
-                                            : "justify-start"
+                                        ? "justify-end"
+                                        : "justify-start"
                                         }`}
                                 >
                                     <div
                                         className={`max-w-[80%] px-6 py-4 ${isMine
-                                                ? "bg-[#8B5CF6] text-white rounded-[20px] rounded-br-none"
-                                                : "bg-white text-[#333] rounded-[20px] rounded-tl-none shadow-sm"
+                                            ? "bg-[#8B5CF6] text-white rounded-[20px] rounded-br-none"
+                                            : "bg-white text-[#333] rounded-[20px] rounded-tl-none shadow-sm"
                                             }`}
                                     >
                                         <p className="whitespace-pre-line text-[17px]">
@@ -155,8 +163,8 @@ export default function FriendPage({
 
                                         <div
                                             className={`flex justify-end items-center gap-2 mt-3 text-sm ${isMine
-                                                    ? "text-white/60"
-                                                    : "text-[#999]"
+                                                ? "text-white/60"
+                                                : "text-[#999]"
                                                 }`}
                                         >
                                             <span>{message.time}</span>

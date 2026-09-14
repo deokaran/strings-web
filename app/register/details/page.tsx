@@ -64,7 +64,7 @@ export default function Details() {
         });
         setShowToast(true)
         setTimeout(() => {
-            router.replace("/register/");
+            router.replace("/home");
         }, 2000);
     };
 

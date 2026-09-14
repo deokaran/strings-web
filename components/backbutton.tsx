@@ -7,7 +7,7 @@ export default function BackButton() {
 
     return (
         <button
-            className="back-button"
+            className="back-button cursor-pointer"
             onClick={() => router.replace("/home")}
         >
             <svg

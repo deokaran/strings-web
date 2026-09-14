@@ -18,13 +18,12 @@ export default function HomeLayouut({
     return (
         <div className="w-full h-screen overflow-hidden grid grid-cols-3">
 
-            {/* FRIEND LIST */}
+          
             <div
                 className={`col-span-3 md:col-span-1 h-full flex flex-col min-h-0 border-e ${
                     isFriendsOpen ? "hidden md:flex" : "flex"
                 }`}
             >
-                {/* HEADER + SEARCH */}
                 <div className="shrink-0 bg-white pb-2">
                     <div className="head-section w-full flex justify-between items-center pt-5 px-5">
                         <div className="logo-section flex items-center">
@@ -143,8 +142,6 @@ export default function HomeLayouut({
                     </div>
                 )}
             </div>
-
-            {/* CHILDREN / CHAT */}
             <div
                 className={`col-span-3 md:col-span-2 min-h-0 overflow-y-auto ${
                     isFriendsOpen ? "flex" : "hidden md:flex"
